@@ -1,0 +1,45 @@
+{
+  "name": "@endyjasmi/ts-module-example",
+  "description": "Module example to test npm package publish.",
+  "version": "0.0.0",
+  "license": "MIT",
+  "keywords": [
+    "example"
+  ],
+  "type": "commonjs",
+  "main": "./build/commonjs/index.js",
+  "module": "./build/module/index.js",
+  "types": "./build/types/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./build/module/index.js",
+      "require": "./build/commonjs/index.js"
+    },
+    "./*": {
+      "import": "./build/module/*.js",
+      "require": "./build/commonjs/*.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "build": "pnpm clear && pnpm build:commonjs && pnpm build:module && pnpm build:types",
+    "build:commonjs": "tsc --module commonjs --outDir build/commonjs && echo '{\"type\":\"commonjs\"}' >> build/commonjs/package.json",
+    "build:module": "tsc --module esnext --outDir build/module && echo '{\"type\":\"module\"}' >> build/module/package.json",
+    "build:types": "tsc --declaration --emitDeclarationOnly --outDir build/types",
+    "clear": "del-cli build/"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "maintainers": [
+    {
+      "name": "Endy Jasmi",
+      "email": "endyjasmi@gmail.com",
+      "url": "https://github.com/endyjasmi"
+    }
+  ],
+  "devDependencies": {
+    "del-cli": "^4.0.1",
+    "typescript": "^4.5.2"
+  }
+}
